@@ -6,6 +6,8 @@ mod block;
 mod errors;
 mod blockchain;
 mod cli;
+mod transaction;
+
 
 fn main()->Result<()> {
   let mut cli = Cli::new()?;
