@@ -18,6 +18,7 @@ pub struct Block {
 }
 
 
+
 impl Block {
 
   pub fn get_transaction(&self) -> &Vec<Transaction> {
@@ -32,6 +33,7 @@ impl Block {
     self.hash.clone()
   }
 
+  ///newGensesisBlock
   pub fn new_genesis_block(coninbase: Transaction) -> Block {
     Block::new_block(vec![coninbase], String::new(), 0).unwrap()
   }
@@ -89,11 +91,11 @@ impl Block {
 
 #[cfg(test)]
 mod tests {
-  use super::*;
+  // use super::*;
 
   #[test]
   fn test_blockchain() {
-    /* let mut b = Blockchain::new();
+    /*  let mut b = Blockchain::new();
     b.add_block("data".to_string());
     b.add_block("data2".to_string());
     b.add_block("data3".to_string());
