@@ -30,6 +30,7 @@ impl Wallet {
     }
   }
 
+
   fn get_address(&self) -> String {
     let mut pub_hash = self.public_key.clone();
     hash_pub_key(&mut pub_hash);
@@ -64,7 +65,6 @@ use crate::errors::Result;
 impl Wallets {
 
   pub fn new() -> Result<Wallets> {
-
     let mut wlt = Wallets {
       wallets: HashMap::<String, Wallet>::new(),
     };
@@ -74,14 +74,13 @@ impl Wallets {
       let i = item?;
       let address = String::from_utf8(i.0.to_vec())?;
       let wallet = bincode::deserialize(&i.1.to_vec())?;
-      wlt.wallets.insert(address, wallet);
+        wlt.wallets.insert(address, wallet);
     }
     drop(db);
     Ok(wlt)
   }
 
   pub fn create_wallet(&mut self) -> String {
-
     let wallet = Wallet::new();
     let address = wallet.get_address();
     self.wallets.insert(address.clone(), wallet);
@@ -90,26 +89,23 @@ impl Wallets {
   }
 
   pub fn get_all_address(&self) -> Vec<String> {
-
     let mut addresses = Vec::new();
     for (address, _) in &self.wallets {
-        addresses.push(address.clone())
+      addresses.push(address.clone())
     }
     addresses
   }
 
   pub fn get_wallet(&self,address: &str)-> Option<&Wallet> {
-
     self.wallets.get(address)
   }
 
   pub fn save_all(&self)-> Result<()> {
-
     let db = sled::open("data/wallets")?;
 
     for (address, wallet) in &self.wallets {
-        let data = bincode::serialize(wallet)?;
-        db.insert(address, data)?;
+      let data = bincode::serialize(wallet)?;
+      db.insert(address, data)?;
     }
 
     db.flush()?;
@@ -167,4 +163,3 @@ mod test {
     ));
   }
 }
-
