@@ -1,9 +1,7 @@
-use crate::block::Block;
 use crate::errors::Result;
+use crate::block::Block;
 
 const TARGET_HEXT: usize = 4;
-// const GENESIS_COINBASE_DATA: &str =
-//     "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks";
 
 #[derive(Debug, Clone)]
 pub struct Blockchain {
@@ -86,14 +84,14 @@ impl<'a> Iterator for BlockchainIter<'a> {
 
 #[cfg(test)]
 mod tests {
-  use super::*;
+  use crate::blockchain::Blockchain;
 
   #[test]
   fn test_add_block() {
     let mut b = Blockchain::new().unwrap();
-    b.add_block("data 1".to_string());
-    b.add_block("data 2".to_string());
-    b.add_block("data 3".to_string());
+    let _ = b.add_block("data 1".to_string());
+    let _ = b.add_block("data 2".to_string());
+    let _ = b.add_block("data 3".to_string());
 
     for item in b.iter() {
       println!("item {:?}",item)

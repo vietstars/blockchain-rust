@@ -1,11 +1,13 @@
 use crate::errors::Result;
-use std::time::SystemTime;
+
 use crypto::digest::Digest;
 use crypto::sha2::Sha256;
 use log::info;
+use serde::{Serialize,Deserialize};
+use std::time::SystemTime;
 
 const TARGET_HEXT: usize = 4;
-use serde::{Serialize,Deserialize};
+const GENESIS_COINBASE_DATA: &str = "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks";
 
 #[derive(Debug,Clone,Serialize,Deserialize)]
 pub struct Block {
@@ -16,7 +18,6 @@ pub struct Block {
   height: usize,
   nonce: i32,
 }
-
 
 impl Block {
 
@@ -29,7 +30,7 @@ impl Block {
   }
 
   pub fn new_genesis_block() -> Block {
-    Block::new_block(String::from("Gensis Block"), String::new(), 0).unwrap()
+    Block::new_block(String::from("Gensis Block"), String::from(GENESIS_COINBASE_DATA), 0).unwrap()
   }
 
   pub fn new_block(data: String, prev_block_hash: String, height: usize) -> Result<Block> {
@@ -82,17 +83,13 @@ impl Block {
   }
 }
 
-
 #[cfg(test)]
 mod tests {
-  use super::*;
+  use crate::block::Block;
 
   #[test]
   fn test_blockchain() {
-    /* let mut b = Blockchain::new();
-    b.add_block("data".to_string());
-    b.add_block("data2".to_string());
-    b.add_block("data3".to_string());
-    dbg!(b);*/
+    let b = Block::new_genesis_block();
+    dbg!(b);
   }
 }

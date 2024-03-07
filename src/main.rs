@@ -1,15 +1,19 @@
-use crate::cli::Cli;
-use crate::errors::Result;
+// use crate::block::Block;
+use crate::blockchain::Blockchain;
 
-mod block;
+// use log::info;
 
 mod errors;
+mod block;
 mod blockchain;
-mod cli;
 
-fn main()->Result<()> {
-  let mut cli = Cli::new()?;
-  cli.run()?;
+fn main() {
+    let mut b = Blockchain::new().unwrap();
+    let _ = b.add_block("data 1".to_string());
+    let _ = b.add_block("data 2".to_string());
+    let _ = b.add_block("data 3".to_string());
 
-  Ok(())
+    for item in b.iter() {
+      println!("item {:?}",item)
+    }
 }
